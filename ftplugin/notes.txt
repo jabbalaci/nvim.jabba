@@ -1,0 +1,8 @@
+Key Rules for ftplugin Files
+----------------------------
+
+* Naming: Files must match the filetype (e.g., python.lua for ft=python).
+
+* Scope: Use buffer-local settings (vim.bo/vim.wo).
+
+* No Side Effects: Avoid global changes (e.g., don’t use vim.o).

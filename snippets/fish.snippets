@@ -1,0 +1,53 @@
+snippet #!
+	#!/usr/bin/env fish
+
+snippet alap
+	#!/usr/bin/env fish
+	
+	echo "hello fish"
+
+snippet ex
+	false && begin  # example
+	    % cat file.txt
+	    content
+	end
+
+snippet note
+	false && begin  # note
+	Note: ...
+	end
+
+snippet both
+	false && begin  # example
+	    % cat file.txt
+	end
+
+	false && begin  # note
+	Note: ...
+	end
+
+snippet fun
+	function ${1:name} -d "..."
+		${0:#body}
+	end
+
+snippet if
+	if ${1:condition}
+		${0:#statements}
+	end
+
+snippet for
+	for ${1:needle} in ${1:haystack}
+		${0:#statements}
+	end
+
+snippet while
+	while ${1:condition}
+		${0:#statements}
+	end
+
+snippet switch
+	switch ${1:word}
+		case ${2:pattern}
+			${0:#statements}
+	end
