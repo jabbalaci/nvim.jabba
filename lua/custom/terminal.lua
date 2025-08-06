@@ -10,7 +10,7 @@ local term_buf_v = nil
 local term_win_v = nil
 local has_cleared_v = false -- Track if we've cleared the screen
 
-vim.keymap.set('n', '<C-t>', function()
+vim.keymap.set({ 'n', 't' }, '<C-t>', function()
   -- Check if we have a valid terminal window
   if term_win_v and vim.api.nvim_win_is_valid(term_win_v) then
     -- Window exists - close it
@@ -56,7 +56,7 @@ local term_buf_h = nil
 local term_win_h = nil
 local has_cleared_h = false -- Track if we've cleared the screen
 
-vim.keymap.set('n', '<C-A-t>', function()
+vim.keymap.set({ 'n', 't' }, '<C-A-t>', function()
   -- Check if we have a valid terminal window
   if term_win_h and vim.api.nvim_win_is_valid(term_win_h) then
     -- Window exists - close it
@@ -93,6 +93,3 @@ vim.keymap.set('n', '<C-A-t>', function()
     vim.cmd 'startinsert'
   end
 end, { desc = 'Toggle terminal in horizontal split' })
-
--- Use <Esc> to exit terminal mode
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')

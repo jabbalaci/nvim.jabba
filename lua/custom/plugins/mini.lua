@@ -40,7 +40,7 @@ return {
       local total_lines = vim.fn.line '$'
       local percent = math.floor((line / total_lines) * 100)
       -- return string.format('%2d:%-2d %3d%%%%', line, vim.fn.col '.', percent)
-      return string.format('%3d%%%% %2d:%-2d', percent, line, vim.fn.col '.')
+      return string.format('%2d:%-2d %4d%%%%', line, vim.fn.col '.', percent)
     end
 
     require('mini.trailspace').setup {

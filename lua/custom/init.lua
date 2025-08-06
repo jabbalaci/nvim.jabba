@@ -9,4 +9,5 @@ return {
   require 'custom.goto_line',
   require 'custom.surround',
   require 'custom.terminal',
+  require 'custom.floating_terminal',
 }

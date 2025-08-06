@@ -301,3 +301,6 @@ vim.keymap.set('n', '<leader>src', function()
   vim.cmd('source ' .. config_path)
   vim.notify('Neovim config reloaded!', vim.log.levels.INFO, { title = 'Config' })
 end, { desc = 'Reload Neovim config' })
+
+-- Press <Esc> twice to exit terminal mode
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
