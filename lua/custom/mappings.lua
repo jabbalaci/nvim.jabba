@@ -33,10 +33,12 @@ end, { desc = 'Exit insert and enter search' })
 vim.keymap.set('n', '<C-x>', 'dd')
 vim.keymap.set('v', '<C-x>', 'd')
 vim.keymap.set('i', '<C-x>', '<Esc>ddi')
-
 -- select all
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 vim.keymap.set({ 'i', 'v' }, '<C-a>', '<ESC>ggVG', { desc = 'Select all' })
+-- HOME
+vim.keymap.set('n', '<Home>', '^', { desc = 'Jump to first non-whitespace character in the line' })
+vim.keymap.set('i', '<Home>', '<Esc>^i', { desc = 'Jump to first non-whitespace character in the line' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
