@@ -5,8 +5,22 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lint = require 'lint'
+
+      -- 1. Register the dscanner linter
+      lint.linters.dscanner = {
+        name = 'dscanner',
+        cmd = 'dscanner',
+        stdin = false,
+        args = { '--styleCheck' },
+        stream = 'stdout',
+        ignore_exitcode = true,
+        parser = require('lint.parser').from_pattern([[(.+)%((%d+):(%d+)%)%[.-%]:%s*(.+)]], { 'file', 'lnum', 'col', 'message' }),
+      }
+
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
+        -- python = { 'flake8' },
+        d = { 'dscanner' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
@@ -35,7 +49,8 @@ return {
       -- lint.linters_by_ft['inko'] = nil
       -- lint.linters_by_ft['janet'] = nil
       -- lint.linters_by_ft['json'] = nil
-      -- lint.linters_by_ft['markdown'] = nil
+      lint.linters_by_ft['markdown'] = nil
+      lint.linters_by_ft['d'] = nil
       -- lint.linters_by_ft['rst'] = nil
       -- lint.linters_by_ft['ruby'] = nil
       -- lint.linters_by_ft['terraform'] = nil

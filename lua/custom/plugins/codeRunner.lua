@@ -13,7 +13,7 @@ return {
         vim.notify('Save the file first!', vim.log.levels.WARN)
         return "echo 'Error: No filename. Save it first!'"
       end
-      vim.cmd 'silent write'
+      -- vim.cmd 'silent write'
 
       local ext = vim.fn.expand '%:e'
       local fname = vim.fn.expand '%:t' -- /opt/Main.java -> Main.java

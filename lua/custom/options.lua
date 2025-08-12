@@ -4,8 +4,8 @@
 -- Make line numbers default
 vim.o.number = true
 -- relative numbers
--- vim.o.relativenumber = false
-vim.o.relativenumber = true
+vim.o.relativenumber = false
+-- vim.o.relativenumber = true
 
 -- Show which line your cursor is on
 vim.o.cursorline = true

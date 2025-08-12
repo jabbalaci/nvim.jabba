@@ -7,6 +7,15 @@ snippet alap
 	{
 	    writeln("${0}D Lang");
 	}
+snippet input()
+	import std.string; // readln(), chomp()
+
+	string input(const string msg = "")
+	{
+		write(msg);
+		// chomp() removes the trailing newline
+		return readln().chomp();
+	}
 snippet wl
 	writeln(${0});
 snippet wf
@@ -26,6 +35,12 @@ snippet ut
 	{
 	    ${0}
 	}
+snippet br
+	break;
+snippet f
+	false
+snippet t
+	true
 ### Import and modules
 snippet imp
 	import
@@ -82,9 +97,9 @@ snippet for
 	}
 snippet fe
 	foreach(${1:elem}; ${2:range})
-	    {
-		    ${0}
-	    }
+	{
+		${0}
+	}
 snippet fei
 	foreach(${1:i}, ${2:elem}; ${3:range}) {
 		${0}

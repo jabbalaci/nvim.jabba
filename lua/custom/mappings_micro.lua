@@ -1,44 +1,61 @@
--- Alt-Space (thumb-friendly): switch between Normal and Insert mode
-vim.keymap.set({ 'i', 'v' }, '<A-Space>', '<Esc>', { noremap = true })
-vim.keymap.set('n', '<A-Space>', 'i', { noremap = true })
+-- Key mappings that make vim similar to micro, i.e.
+-- here I want to mimic functionalities that are
+-- well-known in other (mainly GUI) editors.
 
--- In XFCE (Manjaro Linux) the Alt+Space combination is hard-wired to
--- "Activate the window menu" (the small drop-down that appears at the
--- top-left of every window's title bar)
--- Disable it:
--- 1) Settings → Window Manager → Keyboard
--- 2) clear it
-
--- quit
+-- quit with Ctrl+q
 vim.keymap.set('n', '<C-q>', ':q<CR>', { silent = true })
 vim.keymap.set({ 'i', 'v' }, '<C-q>', '<ESC>:q<CR>', { silent = true })
 vim.keymap.set('n', '<F10>', ':q<CR>', { silent = true })
 vim.keymap.set({ 'i', 'v' }, '<F10>', '<ESC>:q<CR>', { silent = true })
 vim.keymap.set('n', 'Q', ':q!<CR>', { silent = true }) -- force quit
--- duplicate line
+
+-- duplicate line with Ctrl+d
 vim.keymap.set('n', '<C-d>', 'yyp')
--- save
+vim.keymap.set('i', '<C-d>', '<Esc>yypi')
+
+-- save with Ctrl+s
 vim.keymap.set('n', '<C-s>', ':w<CR>')
 vim.keymap.set('i', '<C-s>', '<ESC>:w<CR>a')
 vim.keymap.set('v', '<C-s>', '<ESC>:w<CR>gv')
 -- enter command-line mode
 -- vim.keymap.set({ 'n', 'i', 'v' }, '<C-e>', ':')
--- find
+
+-- find with Ctrl+f
 vim.keymap.set('n', '<C-f>', '/')
 vim.keymap.set('i', '<C-f>', function()
   -- Exit insert mode and show the / prompt immediately
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>/', true, false, true), 'n', true)
 end, { desc = 'Exit insert and enter search' })
--- cut
+
+-- cut line with Ctrl+x
 vim.keymap.set('n', '<C-x>', 'dd')
 vim.keymap.set('v', '<C-x>', 'd')
 vim.keymap.set('i', '<C-x>', '<Esc>ddi')
--- select all
+
+-- select all with Ctrl+a
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select all' })
 vim.keymap.set({ 'i', 'v' }, '<C-a>', '<ESC>ggVG', { desc = 'Select all' })
--- HOME
-vim.keymap.set('n', '<Home>', '^', { desc = 'Jump to first non-whitespace character in the line' })
-vim.keymap.set('i', '<Home>', '<Esc>^i', { desc = 'Jump to first non-whitespace character in the line' })
+
+-- HOME behaves similar to micro
+-- vim.keymap.set('n', '<Home>', '^', { desc = 'Jump to first non-whitespace character in the line' })
+-- vim.keymap.set('i', '<Home>', '<Esc>^i', { desc = 'Jump to first non-whitespace character in the line' })
+local function smart_home()
+  local line = vim.fn.getline '.'
+  local col0 = vim.fn.col '.' - 1 -- 0-based
+  local prefix = line:sub(1, col0)
+
+  local target
+  if col0 == 0 then
+    target = vim.fn.match(line, '\\S') -- already on col 0 → ^ jump
+  elseif prefix:match '^%s*$' then
+    target = 0 -- left of cursor is all white → 0
+  else
+    target = vim.fn.match(line, '\\S') -- default → ^
+  end
+  vim.fn.cursor('.', target + 1)
+end
+-- normal / visual / insert
+vim.keymap.set({ 'n', 'x', 'i' }, '<Home>', smart_home, { silent = true })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -71,20 +88,6 @@ vim.keymap.set('i', '<C-y>', function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc><C-r>i', true, false, true), 'n', true)
 end, { desc = 'Redo' })
 
--- better word jumps
-vim.keymap.set('n', 'w', 'W', { desc = 'Better next word' })
-vim.keymap.set('n', 'b', 'B', { desc = 'Better prev word' })
-vim.keymap.set('n', 'e', 'E', { desc = 'Better end of next word' })
-
--- Alt-Up   → move current line up
-vim.keymap.set('n', '<A-Up>', ':m .-2<CR>', { desc = 'Move line up' })
--- Alt-Down → move current line down
-vim.keymap.set('n', '<A-Down>', ':m .+1<CR>', { desc = 'Move line down' })
--- Alt-Up   → move selected block up
-vim.keymap.set('v', '<A-Up>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
--- Alt-Down → move selected block down
-vim.keymap.set('v', '<A-Down>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
-
 -- close the current tab
 -- vim.keymap.set('n', '<C-w>', function()
 -- vim.cmd 'bdelete' -- or :bdelete!
@@ -104,26 +107,14 @@ vim.keymap.set({ 'n', 'i', 'v' }, '<A-Left>', '<Cmd>BufferLineMovePrev<CR>', { d
 -- Alt + Right → move current buffer one position to the right
 vim.keymap.set({ 'n', 'i', 'v' }, '<A-Right>', '<Cmd>BufferLineMoveNext<CR>', { desc = 'Move buffer right' })
 
-vim.keymap.set('n', '<S-Left>', 'v', { desc = 'Go to visual mode' })
-vim.keymap.set('n', '<S-Right>', 'v', { desc = 'Go to visual mode' })
-vim.keymap.set('n', '<S-Up>', 'v', { desc = 'Go to visual mode' })
-vim.keymap.set('n', '<S-Down>', 'v', { desc = 'Go to visual mode' })
-
-vim.keymap.set('n', '<S-End>', 'v$', { desc = 'Select until the end of the line' })
-vim.keymap.set('n', '<S-Home>', 'v^', { desc = 'Select until the beginning of the line' })
-
-vim.keymap.set('i', '<S-End>', '<Esc>v$', { desc = 'Select until the end of the line' })
-vim.keymap.set('i', '<S-Home>', '<Esc>v^', { desc = 'Select until the beginning of the line' })
-
-vim.keymap.set('n', '!', 'V!', { noremap = true, desc = 'Select current line visually when pressing `!`' })
-
--- copy
+-- copy with Ctrl+c
 vim.keymap.set('v', '<C-c>', function()
   local save_pos = vim.api.nvim_win_get_cursor(0)
   vim.cmd 'normal! y'
   vim.api.nvim_win_set_cursor(0, save_pos)
 end, { desc = 'Copy to clipboard' })
--- paste
+
+-- paste with Ctrl+v
 vim.keymap.set({ 'n', 'i', 'v' }, '<C-v>', function()
   vim.cmd 'normal! gp'
 end, { desc = 'Paste from clipboard' })
@@ -154,27 +145,24 @@ end, { desc = 'De-indent line and move cursor left' })
 
 -- Enable selectmode to allow Shift + arrow keys to select text
 vim.opt.selectmode:append 'key'
-vim.keymap.set('n', '<S-Up>', 'V')
-vim.keymap.set('v', '<S-Up>', '<Up>')
-vim.keymap.set('n', '<S-Down>', 'V')
-vim.keymap.set('v', '<S-Down>', '<Down>')
---
+
+vim.keymap.set('n', '<S-Left>', 'v', { desc = 'Go to visual mode' })
+vim.keymap.set('n', '<S-Right>', 'v', { desc = 'Go to visual mode' })
 vim.keymap.set('v', '<S-Right>', '<Right>')
 vim.keymap.set('v', '<S-Left>', '<Left>')
 
--- Map Ctrl+Alt+q to enter visual block mode
-vim.api.nvim_set_keymap('n', '<C-A-q>', '<C-v>', { noremap = true })
--- Map Alt+q to enter visual block mode
-vim.api.nvim_set_keymap('n', '<A-q>', '<C-v>', { noremap = true })
--- Map Ctrl+Alt+v to enter visual block mode
-vim.api.nvim_set_keymap('n', '<C-A-v>', '<C-v>', { noremap = true })
+-- vim.keymap.set('n', '<S-Up>', 'v', { desc = 'Go to visual mode' })
+-- vim.keymap.set('n', '<S-Down>', 'v', { desc = 'Go to visual mode' })
 
--- inrease number
-vim.keymap.set('n', '<A-a>', '<C-a>', { noremap = true })
-vim.keymap.set('n', '<C-A-a>', '<C-a>', { noremap = true })
--- decrease number
-vim.keymap.set('n', '<A-x>', '<C-x>', { noremap = true })
-vim.keymap.set('n', '<C-A-x>', '<C-x>', { noremap = true })
+vim.keymap.set('n', '<S-End>', 'v$', { desc = 'Select until the end of the line' })
+vim.keymap.set('n', '<S-Home>', 'v^', { desc = 'Select until the beginning of the line' })
+vim.keymap.set('i', '<S-End>', '<Esc>v$', { desc = 'Select until the end of the line' })
+vim.keymap.set('i', '<S-Home>', '<Esc>v^', { desc = 'Select until the beginning of the line' })
+
+vim.keymap.set('n', '<S-Up>', 'V')
+vim.keymap.set('n', '<S-Down>', 'V')
+vim.keymap.set('v', '<S-Up>', '<Up>')
+vim.keymap.set('v', '<S-Down>', '<Down>')
 
 -- toggle current line (comment / uncomment)
 vim.keymap.set('n', '<C-/>', function()
@@ -215,25 +203,6 @@ for _, open in ipairs { '{', '(', '[', "'", '`', '*' } do
   vim.keymap.set('v', open, 'c' .. open .. [[<C-R>"]] .. close .. '<Esc>', { noremap = true, silent = true })
 end
 
--- copy chars from above ("up")
-vim.keymap.set('i', '<A-u>', '<C-y>', { noremap = true })
-vim.keymap.set('n', '<A-u>', 'i<C-y><Esc>l', { noremap = true })
--- copy chars from below ("down")
-vim.keymap.set('i', '<A-d>', '<C-e>', { noremap = true })
-vim.keymap.set('n', '<A-d>', 'i<C-e><Esc>l', { noremap = true })
-
--- vv to activate V
-vim.keymap.set('n', 'vv', 'V', { noremap = true })
-
--- vim.keymap.set('i', '<C-n>', function()
--- require('blink.cmp').select_next_item() -- Explicitly call Blink's next-item
--- end, { desc = 'Next completion item' })
-
--- use original C-n, not blink.cmp's
-vim.keymap.set('i', '<C-n>', '<C-n>', { noremap = true, silent = true })
--- use original C-p, not blink.cmp's
-vim.keymap.set('i', '<C-p>', '<C-p>', { noremap = true, silent = true })
-
 -- vim.keymap.set('n', '<A-l>', function()
 -- require('custom.my_plugin').echo_test()
 -- end, { desc = 'Echo test' })
@@ -241,11 +210,6 @@ vim.keymap.set('i', '<C-p>', '<C-p>', { noremap = true, silent = true })
 -- vim.keymap.set('n', '<C-g>', function()
 --   require('custom.goto_line').jump()
 -- end, { desc = 'Jump to line' })
-
--- Create the :Hello sample command (must start with a capital letter)
-vim.api.nvim_create_user_command('Hello', function()
-  vim.cmd "echo 'Hello, World!'"
-end, {})
 
 local function smart_right_arrow()
   if vim.fn.col '.' + 1 >= vim.fn.col '$' then
@@ -270,39 +234,3 @@ local function smart_left_arrow()
 end
 -- Left arrow at the beginning of a line moves to the end of the previous line
 vim.keymap.set({ 'n', 'i', 'v' }, '<Left>', smart_left_arrow, { desc = 'Smart left arrow' })
-
--- Telescope
--- telescope (builtins)
--- vim.keymap.set({ 'n', 'i' }, '<C-t>', require('telescope.builtin').builtin)
-vim.keymap.set({ 'n' }, '<leader>t', require('telescope.builtin').builtin)
--- explorer
-vim.keymap.set({ 'n', 'i' }, '<C-e>', require('telescope.builtin').find_files)
-vim.keymap.set({ 'n' }, '<leader>te', require('telescope.builtin').find_files)
--- help tags
--- vim.keymap.set({ 'n', 'i' }, '<C-h>', require('telescope.builtin').help_tags)  -- used for moving around the panes
-vim.keymap.set({ 'n' }, '<leader>th', require('telescope.builtin').help_tags)
--- overview
-vim.keymap.set({ 'n', 'o' }, '<C-A-o>', require('telescope.builtin').lsp_document_symbols)
-vim.keymap.set({ 'n' }, '<leader>to', require('telescope.builtin').lsp_document_symbols)
--- live grep
-vim.keymap.set({ 'n' }, '<leader>tg', require('telescope.builtin').live_grep)
-
--- LSP
-vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { desc = 'Rename symbol' })
-vim.keymap.set('n', '<F3>', require('telescope.builtin').lsp_definitions, { desc = 'Goto definition' })
-
---
-vim.keymap.set('n', '<leader>erc', function()
-  local config_path = vim.fn.stdpath 'config' .. '/init.lua'
-  vim.cmd('edit ' .. config_path)
-end, { desc = 'Open Neovim config' })
-
-vim.keymap.set('n', '<leader>src', function()
-  -- Source init.lua
-  local config_path = vim.fn.stdpath 'config' .. '/init.lua'
-  vim.cmd('source ' .. config_path)
-  vim.notify('Neovim config reloaded!', vim.log.levels.INFO, { title = 'Config' })
-end, { desc = 'Reload Neovim config' })
-
--- Press <Esc> twice to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
