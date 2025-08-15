@@ -18,8 +18,10 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   callback = function()
     -- Skip if disabled for current filetype
-    -- local disabled_ft = { 'markdown', 'diff' }  -- Add filetypes to exclude
-    -- if vim.tbl_contains(disabled_ft, vim.bo.filetype) then return end
+    local disabled_ft = { 'snippets' } -- Add filetypes to exclude
+    if vim.tbl_contains(disabled_ft, vim.bo.filetype) then
+      return
+    end
 
     require('mini.trailspace').trim() -- Trim whitespace
   end,
