@@ -13,7 +13,9 @@ vim.keymap.set('n', '<A-Space>', 'i', { noremap = true })
 
 -- better word jumps
 vim.keymap.set('n', 'w', 'W', { desc = 'Better next word' })
+vim.keymap.set('n', 'W', 'w', { noremap = true, desc = 'Better next word' })
 vim.keymap.set('n', 'b', 'B', { desc = 'Better prev word' })
+vim.keymap.set('n', 'B', 'b', { noremap = true, desc = 'Better prev word' })
 vim.keymap.set('n', 'e', 'E', { desc = 'Better end of next word' })
 
 -- Alt-Up   → move current line up
@@ -109,3 +111,6 @@ vim.keymap.set('i', '<F4>', '<ESC>:Twilight<CR>a')
 
 -- invert
 vim.keymap.set({ 'n', 'v' }, '<leader>i', require('nvim-toggler').toggle)
+
+-- Toggle line wrap with F6
+vim.keymap.set('n', '<F6>', ':set wrap!<CR>')

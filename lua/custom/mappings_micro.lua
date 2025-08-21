@@ -125,8 +125,8 @@ vim.keymap.set('v', '<S-Tab>', '<gv', { desc = 'Un-indent & keep visual' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent & keep visual' })
 vim.keymap.set('v', '<', '<gv', { desc = 'Un-indent & keep visual' })
 vim.keymap.set('n', '<Tab>', '>>', { desc = 'Indent current line' })
-vim.keymap.set('n', '<C-i>', '<C-i>', { noremap = true, desc = 'Jump forward' }) -- Explicitly restore <C-i>
 vim.keymap.set('n', '<S-Tab>', '<<', { desc = 'Un-indent current line' })
+vim.keymap.set('n', '<C-i>', '<C-i>', { noremap = true, desc = 'Jump forward' }) -- Explicitly restore <C-i>
 vim.keymap.set('i', '<S-Tab>', function()
   -- Save current cursor position (row, col)
   local original_pos = vim.api.nvim_win_get_cursor(0)
