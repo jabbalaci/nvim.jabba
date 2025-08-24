@@ -28,6 +28,10 @@ snippet on
 	// dfmt on
 snippet str
 	string
+snippet stru
+	struct ${1:Name} {
+		${0}
+	}
 snippet fmt
 	format(${0})
 snippet ut
@@ -92,6 +96,8 @@ snippet path
 	import std.path;
 snippet process
 	import std.process;
+snippet numeric
+	import std.numeric;
 snippet modules
 	import std.stdio, std.string, std.array;
 	import std.traits, std.conv, std.algorithm;

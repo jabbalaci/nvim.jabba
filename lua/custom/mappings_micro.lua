@@ -115,9 +115,10 @@ vim.keymap.set('v', '<C-c>', function()
 end, { desc = 'Copy to clipboard' })
 
 -- paste with Ctrl+v
-vim.keymap.set({ 'n', 'i', 'v' }, '<C-v>', function()
+vim.keymap.set({ 'n', 'v' }, '<C-v>', function()
   vim.cmd 'normal! gp'
 end, { desc = 'Paste from clipboard' })
+vim.keymap.set('i', '<C-v>', '<Esc>pa', { desc = 'Paste from clipboard' })
 
 -- TAB / S-TAB to indent/out-dent while keeping the selection
 vim.keymap.set('v', '<Tab>', '>gv', { desc = 'Indent & keep visual' })

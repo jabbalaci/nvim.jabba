@@ -27,8 +27,32 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
+-- start the terminal in insert mode
 vim.api.nvim_create_autocmd('TermOpen', {
   callback = function()
     vim.cmd 'startinsert'
   end,
 })
+
+-- {{ highlight the '!' (not) sign
+-- Create the highlight group once
+vim.api.nvim_set_hl(0, 'NegationBang', { bg = '#ffff00', ctermbg = 3 })
+-- yellow: "#ffff00"
+-- a bit darker: "#ffe300"
+
+-- Define the autocommand
+local negation_group = vim.api.nvim_create_augroup('NegationBang', { clear = true })
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+  group = negation_group,
+  pattern = { '*.d', '*.c', '*.java', '*.h', '*.cpp', '*.cc', '*.hpp' }, -- edit to taste
+  callback = function(args)
+    -- matchadd() returns an id; store it in buffer-local var so we can clear it
+    if vim.b[args.buf].negation_bang_id then
+      vim.fn.matchdelete(vim.b[args.buf].negation_bang_id)
+    end
+    -- vim.b[args.buf].negation_bang_id = vim.fn.matchadd('NegationBang', [[\%(\s\|(\)\zs!]], -1)  -- previous, was OK
+    vim.b[args.buf].negation_bang_id = vim.fn.matchadd('NegationBang', [[\%(\s\|(\)\zs!\ze=\@!]], -1)
+  end,
+})
+-- }} highlight the '!' (not) sign
