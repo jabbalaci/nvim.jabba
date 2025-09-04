@@ -100,6 +100,11 @@ vim.keymap.set('n', '<leader>src', function()
   vim.notify('Neovim config reloaded!', vim.log.levels.INFO, { title = 'Config' })
 end, { desc = 'Reload Neovim config' })
 
+-- make Ctrl+o and Ctrl+i work in insert mode
+-- !!! somehow it conflicted with the TAB (???), so I disabled it
+-- vim.keymap.set('i', '<C-o>', '<ESC><C-o>i', { noremap = true })
+-- vim.keymap.set('i', '<C-i>', '<ESC><C-i>i', { noremap = true })
+
 -- Press <Esc> twice to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
 
