@@ -1,11 +1,11 @@
 :h lua-guide
 
 I use the following language servers (:Mason):
-* ruff
 * clangd
 * gopls
 * jdtls
 * jedi-language-server
 * lua-language-server
+* ruff
 * serve-d
 * stylua
