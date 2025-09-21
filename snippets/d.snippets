@@ -1,55 +1,4 @@
-snippet alap
-	#!/usr/bin/env rdmd
-
-	import std.stdio;
-
-	void main()
-	{
-	    writeln("${0}D Lang");
-	}
-snippet input()
-	import std.string; // readln(), chomp()
-
-	string input(const string msg = "")
-	{
-		write(msg);
-		// chomp() removes the trailing newline
-		return readln().chomp();
-	}
-snippet wl
-	writeln(${0});
-snippet wf
-	writefln(${0});
-snippet wr
-	write(${0});
-snippet off
-	// dfmt off
-snippet on
-	// dfmt on
-snippet str
-	string
-snippet stru
-	struct ${1:Name} {
-		${0}
-	}
-snippet fmt
-	format(${0})
-snippet ut
-	unittest
-	{
-	    ${0}
-	}
-snippet br
-	break;
-snippet cont
-	continue;
-snippet fa
-	false
-snippet tr
-	true
 ### Import and modules
-snippet imp
-	import 
 snippet pimp
 	public import
 snippet io
@@ -102,6 +51,8 @@ snippet exit
 	import core.stdc.stdlib;
 snippet unittest
 	import std.exception; // assertThrown(), assertNotThrown()
+snippet exc
+	import std.exception; // assumeUnique()
 snippet ass
 	assert($0);
 snippet modules
@@ -431,3 +382,57 @@ snippet idk
 	// I don't know how this works. Don't touch it.
 snippet idfk
 	// Don't FUCKING touch this.
+###############################
+### My (Laszlo's) own stuff ###
+###############################
+snippet alap
+	#!/usr/bin/env rdmd
+
+	import std.stdio;
+
+	void main()
+	{
+	    writeln("${0}D Lang");
+	}
+snippet input()
+	import std.string; // readln(), chomp()
+
+	string input(const string msg = "")
+	{
+		write(msg);
+		// chomp() removes the trailing newline
+		return readln().chomp();
+	}
+snippet wl
+	writeln(${0});
+snippet wf
+	writefln(${0});
+snippet wr
+	write(${0});
+snippet off
+	// dfmt off
+snippet on
+	// dfmt on
+snippet str
+	string
+snippet stru
+	struct ${1:Name} {
+		${0}
+	}
+snippet fmt
+	format(${0})
+snippet ut
+	unittest
+	{
+	    ${0}
+	}
+snippet br
+	break;
+snippet cont
+	continue;
+snippet fa
+	false
+snippet tr
+	true
+snippet type
+	typeof(${0}).stringof
