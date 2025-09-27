@@ -252,13 +252,14 @@ return {
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for ts_ls)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
+          -- new API:
+          vim.lsp.config(server_name, server)
         end,
       },
-      require('lspconfig').serve_d.setup {
-        cmd = { '/home/jabba/.local/share/code-d/bin/serve-d' }, -- from a VS code plugin, it's newer
-        capabilities = capabilities,
-      },
+      vim.lsp.config('serve_d', {
+        cmd = { '/home/jabba/.local/share/code-d/bin/serve-d' },
+        mason_lspconfig_completionapabilities = capabilities,
+      }),
     }
   end,
 }
