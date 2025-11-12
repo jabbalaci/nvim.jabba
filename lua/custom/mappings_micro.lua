@@ -212,26 +212,26 @@ end
 --   require('custom.goto_line').jump()
 -- end, { desc = 'Jump to line' })
 
-local function smart_right_arrow()
-  if vim.fn.col '.' + 1 >= vim.fn.col '$' then
-    if vim.fn.line '.' < vim.fn.line '$' then
-      vim.cmd 'normal! j0'
-    end
-  else
-    vim.cmd 'normal! l'
-  end
-end
+-- local function smart_right_arrow()
+-- if vim.fn.col '.' + 1 >= vim.fn.col '$' then
+-- if vim.fn.line '.' < vim.fn.line '$' then
+-- vim.cmd 'normal! j0'
+-- end
+-- else
+-- vim.cmd 'normal! l'
+-- end
+-- end
 -- Right arrow at the end of a line moves to the beginning of the next line
-vim.keymap.set({ 'n', 'i', 'v' }, '<Right>', smart_right_arrow, { desc = 'Smart right arrow' })
+-- vim.keymap.set({ 'n', 'i', 'v' }, '<Right>', smart_right_arrow, { desc = 'Smart right arrow' })
 
-local function smart_left_arrow()
-  if vim.fn.col '.' == 1 then
-    if vim.fn.line '.' > 1 then
-      vim.cmd 'normal! k$'
-    end
-  else
-    vim.cmd 'normal! h'
-  end
-end
+-- local function smart_left_arrow()
+-- if vim.fn.col '.' == 1 then
+-- if vim.fn.line '.' > 1 then
+-- vim.cmd 'normal! k$'
+-- end
+-- else
+-- vim.cmd 'normal! h'
+-- end
+-- end
 -- Left arrow at the beginning of a line moves to the end of the previous line
-vim.keymap.set({ 'n', 'i', 'v' }, '<Left>', smart_left_arrow, { desc = 'Smart left arrow' })
+-- vim.keymap.set({ 'n', 'i', 'v' }, '<Left>', smart_left_arrow, { desc = 'Smart left arrow' })

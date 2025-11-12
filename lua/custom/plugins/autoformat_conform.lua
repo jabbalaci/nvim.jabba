@@ -25,7 +25,7 @@ return {
         return nil
       else
         return {
-          timeout_ms = 500,
+          timeout_ms = 800, -- previous value (before Kotlin) was 500
           lsp_format = 'fallback',
         }
       end
@@ -39,6 +39,7 @@ return {
       java = { 'clang_format' },
       json = { 'clang_format' },
       go = { 'gofmt' }, -- leave it like this, don't add under "formatters"
+      kotlin = { 'ktlint' },
     },
 
     formatters = {
@@ -66,6 +67,11 @@ return {
         args = { '--style=Microsoft', '-i', '$FILENAME' },
         stdin = false, -- for in-place formatting
       },
+      -- ktlint = {
+      -- command = 'ktlint',
+      -- args = { '-F', '$FILENAME' },
+      -- stdin = true, -- for in-place formatting
+      -- },
     },
   },
 }

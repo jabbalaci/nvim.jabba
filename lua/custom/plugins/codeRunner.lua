@@ -27,6 +27,8 @@ return {
       elseif ext == 'java' then
         local cmd = ('javac %s && java %s'):format(vim.fn.shellescape(fname), vim.fn.shellescape(fname_no_ext))
         return cmd
+      elseif ext == 'kt' then
+        return 'kscript ' .. vim.fn.shellescape(full)
       else
         return ("echo 'No run rule for extension: .%s'"):format(ext)
       end
