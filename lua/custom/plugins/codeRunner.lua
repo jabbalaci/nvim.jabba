@@ -15,6 +15,14 @@ return {
       end
       -- vim.cmd 'silent write'
 
+      local fortran_ext = {
+        f = true,
+        f90 = true,
+        f95 = true,
+        f03 = true,
+        f08 = true,
+      }
+
       local ext = vim.fn.expand '%:e'
       local fname = vim.fn.expand '%:t' -- /opt/Main.java -> Main.java
       local fname_no_ext = vim.fn.expand '%:t:r' -- /opt/Main.java -> Main
@@ -22,6 +30,8 @@ return {
         return 'python3 ' .. vim.fn.shellescape(full)
       elseif ext == 'c' then
         return ("gcc '%s' && ./a.out"):format(vim.fn.shellescape(full))
+      elseif fortran_ext[ext] then
+        return ("gfortran '%s' && ./a.out"):format(vim.fn.shellescape(full))
       elseif ext == 'd' then
         return 'rdmd ' .. vim.fn.shellescape(full)
       elseif ext == 'java' then
@@ -29,6 +39,8 @@ return {
         return cmd
       elseif ext == 'kt' then
         return 'kscript ' .. vim.fn.shellescape(full)
+      elseif ext == 'cs' then
+        return 'dotnet run'
       else
         return ("echo 'No run rule for extension: .%s'"):format(ext)
       end
