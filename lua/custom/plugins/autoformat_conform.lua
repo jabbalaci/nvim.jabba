@@ -40,6 +40,7 @@ return {
       json = { 'clang_format' },
       go = { 'gofmt' }, -- leave it like this, don't add under "formatters"
       kotlin = { 'ktlint' },
+      fortran = { 'fprettify' },
     },
 
     formatters = {

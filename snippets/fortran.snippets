@@ -1,6 +1,9 @@
+snippet imp
+	implicit none
+	$0
 snippet impl
 	implicit none
-		$0
+	$0
 snippet prog
 	program ${1:main}
 		$0
@@ -48,8 +51,6 @@ snippet type
 	end type
 snippet const
 	${1:type}, parameter :: $2 = $0
-snippet arr
-	${1:type}, allocatable, dimension(${2::}) :: $0
 snippet intent
 	${1:type}, intent(inout) :: $0
 # Array
@@ -81,8 +82,6 @@ snippet func
 	function ${1:name}($2) result($3)
 		$0
 	end function $1
-snippet pr
-	write(*,*) $0
 snippet read
 	read( unit = ${1:fp}, file = ${2:filename}${3:, iostat = IERR }) $0
 snippet write
@@ -91,3 +90,93 @@ snippet open
 	open (unit = ${1:fp}, file = ${2:filename}, status = unknown${3:, iostat = IERR }) $0
 snippet close
 	close ( unit = ${1:fp} ) $0
+###############################
+### My (Laszlo's) own stuff ###
+###############################
+snippet alap
+	program alap
+		implicit none
+		print '(a)', "$0Fortran"
+	end program alap
+snippet pr
+	print *, $0
+snippet wr
+	write(*,*) $0
+snippet prs
+	print '(a)', "$0"
+snippet pri
+	print '(i0)', $0
+snippet buffer
+	character(len=256) :: buffer
+snippet strd
+	character(:), allocatable :: name
+snippet input
+	write(*, *, advance="no") "Name: "
+	read(*, '(a)') buffer
+snippet char
+	character
+snippet halt
+	stop  ! die
+snippet die
+	stop  ! die
+snippet break
+	exit  ! break
+snippet continue
+	cycle  ! continue
+snippet loop
+	do
+		$0
+	end do
+snippet off
+	!&<
+snippet on
+	!&>
+snippet true
+	.true.
+snippet false
+	.false.
+snippet openFileForRead
+	integer :: unit, ios
+	open(newunit=unit, file="input.txt", status="old", action="read", iostat=ios)
+	if (ios /= 0) then
+       print *, "Error: cannot open file"
+       stop 1
+   	end if
+snippet readLineFromFile
+	character(len=100) :: line
+	do
+	   read(unit, '(a)', iostat=ios) line
+       if (ios /= 0) then
+          exit  ! break
+       end if
+	   ! ...
+	end do
+snippet pi
+	use iso_fortran_env, only: real64
+   	real(real64), parameter :: PI = acos(-1.0_real64)
+snippet float
+	use iso_fortran_env, only: sp => real32, dp => real64
+	real(sp) :: szimpla = 0.1_sp  ! Always use a kind suffix for floating-point literal constants.
+snippet double
+	use iso_fortran_env, only: sp => real32, dp => real64
+   	real(dp) :: dupla = 0.2_dp  ! Always use a kind suffix for floating-point literal constants.
+snippet block
+	block
+	   $0
+	end block
+snippet dim
+	dimension($0)
+snippet arr
+	integer, dimension(10) :: numbers
+snippet arrd
+	${1:type}, allocatable, dimension(${2::}) :: $0
+snippet hl
+	print *, "---"
+snippet printMatrix
+	do i = 1, size(matrix, 1)  ! iterate over the rows
+       print *, matrix(i, :)
+	end do
+snippet assoc
+	associate ($0my_alias => ...)
+
+   	end associate

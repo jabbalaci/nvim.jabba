@@ -2,6 +2,7 @@
 
 I use the following language servers (:Mason):
 * clangd
+* fortls
 * gopls
 * jdtls
 * jedi-language-server
