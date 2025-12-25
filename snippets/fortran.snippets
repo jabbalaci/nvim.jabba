@@ -1,24 +1,16 @@
 snippet imp
 	implicit none
-	$0
 snippet impl
 	implicit none
-	$0
 snippet prog
 	program ${1:main}
-		$0
+	   implicit none
+	   $0
 	end program $1
-snippet mod
-	module ${1:modulename}
-		$0
-	end module $1
-snippet proc
-	procedure ${1:name}
-		${0}
-	end procedure $1
 snippet iface
 	interface ${1:name}
-		${0}
+	   !# add "implicit none" to its subprograms
+	   ${0}
 	end interface $1
 snippet doc
 	! """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -32,100 +24,100 @@ snippet doc
 # Variables definitions
 # Boolean
 snippet bool
-	logical :: $0
+	logical
 # Integer
 snippet int
-	integer :: $0
-snippet real
-	real :: $0
+	integer
 # Double Precision
-snippet double
-	double precision :: $0
+# snippet double
+# double precision :: $0
 # Char
+snippet char
+	character
 snippet str
-	character(len=${1:*}) :: ${0:}
-# Types
-snippet type
-	type(${1:name})
-		$0
-	end type
+	character(len=${1:10}) :: ${2:name}
+snippet str_const
+	character(len=*), parameter :: ${1:name} = "${2:value}"
 snippet const
-	${1:type}, parameter :: $2 = $0
+	${1:type}, parameter :: ${2:name} = ${3:value}
+snippet MAX
+	integer, parameter :: ${1:NAME} = ${2:value}
 snippet intent
-	${1:type}, intent(inout) :: $0
+	${1:type}, intent(in) :: $0
 # Array
 snippet /
 	(/ $1 /) ${2:,&} $0
 snippet if
 	if (${1:condition}) then
-		$2
+	   $2
 	end if
 snippet case
 	select case (${1:expr})
-		case ($2)
-		case default
-			$3
+	   case ($2)
+	   case default
+	      $3
 	end select $0
 snippet do
-	do ${1:i} = ${2:start},${3:end}, ${4:incr}
-		$4
+	do ${1:i} = ${2:start},${3:end}
+	   $4
 	end do
 snippet dow
 	do while (${1:condition})
-		$2
+	   $2
 	end do
-snippet sub
-	subroutine ${1:name}($2)
-		$0
-	end subroutine $1
-snippet func
-	function ${1:name}($2) result($3)
-		$0
-	end function $1
 snippet read
-	read( unit = ${1:fp}, file = ${2:filename}${3:, iostat = IERR }) $0
+	read(unit = ${1:fp}, file = ${2:filename}${3:, iostat = IERR }) $0
 snippet write
-	write( unit = ${1:fp}, file = ${2:filename}${3:, iostat = IERR }) $0
+	write(unit = ${1:fp}, file = ${2:filename}${3:, iostat = IERR }) $0
 snippet open
-	open (unit = ${1:fp}, file = ${2:filename}, status = unknown${3:, iostat = IERR }) $0
+	open(unit = ${1:fp}, file = ${2:filename}, status = unknown${3:, iostat = IERR }) $0
 snippet close
-	close ( unit = ${1:fp} ) $0
+	close(unit = ${1:fp}) $0
 ###############################
 ### My (Laszlo's) own stuff ###
 ###############################
 snippet alap
 	program alap
-		implicit none
-		print '(a)', "$0Fortran"
+	   implicit none
+	   print '(a)', "$0Fortran"
 	end program alap
 snippet pr
 	print *, $0
 snippet wr
-	write(*,*) $0
-snippet prs
+	write (*,*) $0
+snippet pr_any
+	print '(*(g0))', $0
+snippet pr_space
+	print '(*(g0,x))', $0
+snippet joker
+	'(*(g0))'
+snippet space
+	'(*(g0,x))'
+snippet pr_str
 	print '(a)', "$0"
-snippet pri
+snippet pr_int
 	print '(i0)', $0
 snippet buffer
 	character(len=256) :: buffer
-snippet strd
-	character(:), allocatable :: name
+snippet str_dyn
+	character(len=:), allocatable :: name
 snippet input
-	write(*, *, advance="no") "Name: "
-	read(*, '(a)') buffer
+	write (*, '(a)', advance="no") "Name: "
+	read (*, '(a)') buffer  !# read the whole line, don't stop at the first space
+	!# read (*, *) age  !# where age is an integer, for instance
 snippet char
 	character
 snippet halt
-	stop  ! die
+	stop  !# die
 snippet die
-	stop  ! die
+	stop  !# die
 snippet break
-	exit  ! break
+	exit  !# break
 snippet continue
-	cycle  ! continue
+	cycle  !# continue
 snippet loop
 	do
-		$0
+	   $0
 	end do
 snippet off
 	!&<
@@ -147,19 +139,19 @@ snippet readLineFromFile
 	do
 	   read(unit, '(a)', iostat=ios) line
        if (ios /= 0) then
-          exit  ! break
+          exit  !# break
        end if
-	   ! ...
+	   !# ...
 	end do
 snippet pi
-	use iso_fortran_env, only: real64
-   	real(real64), parameter :: PI = acos(-1.0_real64)
+	use iso_fortran_env, only: sp => real32, dp => real64
+	real(dp), parameter :: PI = acos(-1.0_dp)
 snippet float
 	use iso_fortran_env, only: sp => real32, dp => real64
-	real(sp) :: szimpla = 0.1_sp  ! Always use a kind suffix for floating-point literal constants.
+	real(sp) :: szimpla = 0.1_sp  !# Always use a kind suffix for floating-point literal constants.
 snippet double
 	use iso_fortran_env, only: sp => real32, dp => real64
-   	real(dp) :: dupla = 0.2_dp  ! Always use a kind suffix for floating-point literal constants.
+   	real(dp) :: dupla = 0.2_dp  !# Always use a kind suffix for floating-point literal constants.
 snippet block
 	block
 	   $0
@@ -171,12 +163,83 @@ snippet arr
 snippet arrd
 	${1:type}, allocatable, dimension(${2::}) :: $0
 snippet hl
-	print *, "---"
+	print '(a)', "---"
 snippet printMatrix
-	do i = 1, size(matrix, 1)  ! iterate over the rows
+	do i = 1, size(matrix, 1)  !# iterate over the rows
        print *, matrix(i, :)
 	end do
 snippet assoc
 	associate ($0my_alias => ...)
 
    	end associate
+snippet alloc
+	allocate($0)
+snippet dealloc
+	deallocate($0)
+snippet and
+	.and.
+snippet or
+	.or.
+snippet not
+	.not.
+snippet cont
+	contains
+snippet proc
+	procedure
+snippet self
+	class(${1:t_type}), intent(in) :: self
+snippet instance
+	type(t_square) :: negyzet
+snippet sub
+	subroutine $0name(arg1)
+	   type1, intent(in) :: arg1
+
+	end subroutine
+snippet func
+	function $0name(arg1) result(result)
+	   type1, intent(in) :: arg1
+	   type2 :: result
+
+	end function
+snippet mod
+	module ${1:my_mod}
+	   implicit none
+	   private  !# everything is private, except:
+
+	   public public_var, public_subprogram
+
+	contains
+
+	end module $1
+snippet int_i
+	integer :: i
+snippet ii
+	integer :: i
+snippet str_s
+	character(len=*), intent(in) :: s
+snippet optional_parameter
+	!# call greet("László")
+	!# call greet("László", greetings="Bonjour")
+	subroutine greet(name, greetings)
+	   character(len=*), intent(in) :: name
+	   character(len=*), intent(in), optional :: greetings
+	   character(:), allocatable :: greetings_value
+	   if (present(greetings)) then
+	      greetings_value = greetings
+	   else
+	      greetings_value = "Hello"
+	   end if
+
+	   print '(4a)', greetings_value, ", ", name, "!"
+	end subroutine
+snippet type
+	type :: t_${1:name}
+	   $0
+	end type
+	!# type(t_pair) :: pair
+snippet res
+	result
+snippet to_int
+	read (s, *) n  !# str2int; s -> n; read from s and put the result in n; s must be a variable (not a constant)
+snippet to_str
+	write (s, '(i0)') n  !# int2str; s <- n; write the value of n into s
