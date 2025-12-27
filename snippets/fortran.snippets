@@ -42,6 +42,10 @@ snippet const
 	${1:type}, parameter :: ${2:name} = ${3:value}
 snippet MAX
 	integer, parameter :: ${1:NAME} = ${2:value}
+snippet TAB
+	character(len=1), parameter :: TAB = achar(9)
+	character(len=2), parameter :: TAB2 = achar(9)//achar(9)
+	character(len=3), parameter :: TAB3 = achar(9)//achar(9)//achar(9)
 snippet intent
 	${1:type}, intent(in) :: $0
 # Array
@@ -51,12 +55,15 @@ snippet if
 	if (${1:condition}) then
 	   $2
 	end if
-snippet case
+snippet elseif
+	else if ($0) then
+snippet select
 	select case (${1:expr})
-	   case ($2)
+	   case (${2:value})
+	      !# ...
 	   case default
-	      $3
-	end select $0
+	      !# ...
+	end select
 snippet do
 	do ${1:i} = ${2:start},${3:end}
 	   $4
@@ -93,10 +100,16 @@ snippet joker
 	'(*(g0))'
 snippet space
 	'(*(g0,x))'
+snippet text
+	'(a)'
+snippet i0
+	'(i0)'
 snippet pr_str
 	print '(a)', "$0"
 snippet pr_int
 	print '(i0)', $0
+snippet blank
+	print *
 snippet buffer
 	character(len=256) :: buffer
 snippet str_dyn
@@ -104,7 +117,9 @@ snippet str_dyn
 snippet input
 	write (*, '(a)', advance="no") "Name: "
 	read (*, '(a)') buffer  !# read the whole line, don't stop at the first space
+	!# read (*, '(a)') char  !# use this when reading a character
 	!# read (*, *) age  !# where age is an integer, for instance
+	!# best way: read as text and convert it to whatever you need (and check iostat)
 snippet char
 	character
 snippet halt
@@ -177,11 +192,11 @@ snippet alloc
 snippet dealloc
 	deallocate($0)
 snippet and
-	.and.
+	.and. 
 snippet or
-	.or.
+	.or. 
 snippet not
-	.not.
+	.not. 
 snippet cont
 	contains
 snippet proc
@@ -243,3 +258,8 @@ snippet to_int
 	read (s, *) n  !# str2int; s -> n; read from s and put the result in n; s must be a variable (not a constant)
 snippet to_str
 	write (s, '(i0)') n  !# int2str; s <- n; write the value of n into s
+snippet ord_chr
+	!# chr(65) -> 'A'; achar(65) -> 'A'
+	!# ord('A') -> 65; iachar('A') -> 65
+snippet inner
+	intrinsic

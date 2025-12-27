@@ -68,6 +68,11 @@ return {
         args = { '--style=Microsoft', '-i', '$FILENAME' },
         stdin = false, -- for in-place formatting
       },
+      fprettify = {
+        command = 'fprettify',
+        args = { '-w', '3', '$FILENAME' }, -- "-w 3": space around '*' and '/'
+        stdin = false, -- for in-place formatting
+      },
       -- ktlint = {
       -- command = 'ktlint',
       -- args = { '-F', '$FILENAME' },
