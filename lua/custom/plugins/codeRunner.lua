@@ -18,6 +18,7 @@ return {
       local fortran_ext = {
         f = true,
         f90 = true,
+        F90 = true,
         f95 = true,
         f03 = true,
         f08 = true,
