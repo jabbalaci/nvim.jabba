@@ -7,6 +7,7 @@ I use the following language servers (:Mason):
 * jdtls
 * jedi-language-server
 * lua-language-server
+* nimlangserver
 * ruff
 * serve-d
 * stylua

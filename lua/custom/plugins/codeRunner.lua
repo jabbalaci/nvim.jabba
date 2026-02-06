@@ -29,6 +29,8 @@ return {
       local fname_no_ext = vim.fn.expand '%:t:r' -- /opt/Main.java -> Main
       if ext == 'py' then
         return 'python3 ' .. vim.fn.shellescape(full)
+      elseif ext == 'nim' then
+        return 'nim r --hints:off ' .. vim.fn.shellescape(full)
       elseif ext == 'c' then
         return ("gcc '%s' && ./a.out"):format(vim.fn.shellescape(full))
       elseif fortran_ext[ext] then

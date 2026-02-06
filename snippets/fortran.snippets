@@ -57,6 +57,10 @@ snippet if
 	end if
 snippet elseif
 	else if ($0) then
+snippet then
+	then
+	   $0
+	end if
 snippet select
 	select case (${1:expr})
 	   case (${2:value})
@@ -92,7 +96,9 @@ snippet pr
 	print *, $0
 snippet wr
 	write (*,*) $0
-snippet pr_any
+snippet wr_stderr
+	write (stderr, '(*(g0))') "Error: ..."
+snippet pr_joker
 	print '(*(g0))', $0
 snippet pr_space
 	print '(*(g0,x))', $0
@@ -197,6 +203,10 @@ snippet or
 	.or. 
 snippet not
 	.not. 
+snippet eq
+	.eqv. 
+snippet neq
+	.neqv. 
 snippet cont
 	contains
 snippet proc
@@ -206,22 +216,22 @@ snippet self
 snippet instance
 	type(t_square) :: negyzet
 snippet sub
-	subroutine $0name(arg1)
-	   type1, intent(in) :: arg1
+	subroutine ${1:name}(${2:arg1})
+	   ${3:type1}, intent(in) :: ${4:arg1}
 
 	end subroutine
 snippet func
-	function $0name(arg1) result(result)
-	   type1, intent(in) :: arg1
-	   type2 :: result
+	function ${1:name}(${2:arg1}) result(result)
+	   ${3:type1}, intent(in) :: ${4:arg1}
+	   ${5:type2} :: result
 
 	end function
 snippet mod
 	module ${1:my_mod}
 	   implicit none
-	   private  !# everything is private, except:
+	   private
 
-	   public public_var, public_subprogram
+	   public :: public_var, public_subprogram
 
 	contains
 
@@ -230,7 +240,7 @@ snippet int_i
 	integer :: i
 snippet ii
 	integer :: i
-snippet str_s
+snippet str_param
 	character(len=*), intent(in) :: s
 snippet optional_parameter
 	!# call greet("László")
@@ -265,3 +275,16 @@ snippet inner
 	intrinsic
 snippet tab_lf
 	use stdlib_ascii, only: tab, lf
+snippet argc_argv
+	!# argc:    command_argument_count()  , int
+	!# argv[i]: use jsys; s = argv(i)     , file's name at index position 0
+snippet stdin_stdout_stderr
+   use iso_fortran_env, only: stdin => input_unit, &    !# 5
+                              stdout => output_unit, &  !# 6
+                              stderr => error_unit      !# 0
+snippet stdin
+   use iso_fortran_env, only: stdin => input_unit
+snippet stdout
+   use iso_fortran_env, only: stdout => output_unit
+snippet stderr
+   use iso_fortran_env, only: stderr => error_unit

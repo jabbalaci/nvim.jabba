@@ -308,5 +308,13 @@ require('lazy').setup({
 -- Jabba Laci
 require 'custom'
 
+-- disable LSP info lines
+vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  if result.type == vim.lsp.protocol.MessageType.Info then
+    return
+  end
+  vim.lsp.handlers['window/showMessage'](nil, result, ctx)
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

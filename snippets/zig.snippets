@@ -1,0 +1,24 @@
+snippet alap
+	const std = @import("std");
+
+	pub fn main() void {
+		std.debug.print("$0hello\n", .{});
+	}
+snippet std
+	const std = @import("std");
+snippet expect
+	const expect = std.testing.expect;
+snippet test
+	test "${1:test_name}" {
+	    try expect(${2:true});
+	}
+snippet co
+	const
+snippet debug_print
+	std.debug.print("${1:hello}\n", .{});
+snippet ii
+	var ${1:x}: i32 = ${2:undefined};
+snippet debug_i
+	std.debug.print("{}\n", .{${1:x}});
+snippet to_int
+	@intCast(${1:x})

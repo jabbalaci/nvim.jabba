@@ -1,0 +1,50 @@
+snippet shebang1
+	#!/usr/bin/env nimcr
+snippet shebang2
+	#!/usr/bin/env -S nim r --hints:off --warnings:off
+snippet alap
+	import strutils    # strip, split, join
+	import strformat   # &"Hello {name}!"
+	import sequtils    # toSeq(iter), map, filter
+	# import math        # sum
+	# import algorithm   # sorted(seq), reversed(seq)
+	# import tables
+	# import sets
+
+	# import pykot
+	# import pykot/[console, converters, euler, fs, functional,
+	#               pretty, process, jrandom, strings, jsystem, types, web]
+
+	proc main() =
+	  echo "$0hello"
+
+	# ############################################################################
+
+	when isMainModule:
+	  main()
+snippet e
+	echo 
+snippet dis
+	discard $0
+snippet proc
+	proc ${1:name}() =
+	  discard
+snippet proc1
+	proc ${1:name}() =
+	  discard
+snippet proc2
+	proc ${1:name}(): int =
+	  return 0
+snippet func
+	func ${1:name}(): int =
+	  return 0
+snippet hl
+	echo "---"
+snippet sep
+	# ############################################################################
+snippet ret
+	return 
+snippet str
+	string
+snippet co
+	const 
