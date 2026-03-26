@@ -30,7 +30,7 @@ return {
       if ext == 'py' then
         return 'python3 ' .. vim.fn.shellescape(full)
       elseif ext == 'nim' then
-        return 'nim r --hints:off ' .. vim.fn.shellescape(full)
+        return 'nim r --hints:off --warnings:off ' .. vim.fn.shellescape(full)
       elseif ext == 'c' then
         return ("gcc '%s' && ./a.out"):format(vim.fn.shellescape(full))
       elseif fortran_ext[ext] then

@@ -1,5 +1,6 @@
 snippet shebang1
-	#!/usr/bin/env nimcr
+	#!/usr/bin/env nimbang
+	#off:nimbang-args c -d:release
 snippet shebang2
 	#!/usr/bin/env -S nim r --hints:off --warnings:off
 snippet alap
@@ -23,6 +24,8 @@ snippet alap
 	when isMainModule:
 	  main()
 snippet e
+	echo 
+snippet ec
 	echo 
 snippet dis
 	discard $0
@@ -48,3 +51,17 @@ snippet str
 	string
 snippet co
 	const 
+snippet up
+	countup($0)
+snippet down
+	countdown($0)
+snippet input
+	proc input(prompt: string = ""): string =
+	  stdout.write(prompt)
+	  stdin.readLine()
+snippet to_int
+	parseInt
+snippet to_float
+	parseFloat
+snippet type
+	import typetraits  # echo n.type.name

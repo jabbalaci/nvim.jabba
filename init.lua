@@ -309,11 +309,15 @@ require('lazy').setup({
 require 'custom'
 
 -- disable LSP info lines
-vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+local default_showMessage = vim.lsp.handlers['window/showMessage']
+vim.lsp.handlers['window/showMessage'] = function(err, result, ctx)
+  if not result then
+    return
+  end
   if result.type == vim.lsp.protocol.MessageType.Info then
     return
   end
-  vim.lsp.handlers['window/showMessage'](nil, result, ctx)
+  default_showMessage(err, result, ctx)
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
