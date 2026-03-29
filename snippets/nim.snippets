@@ -1,13 +1,13 @@
 snippet shebang
 	#!/usr/bin/env nimbang
 	#off:nimbang-args c -d:release
-	#nimbang-settings nodebug
+	#nimbang-settings hideDebugInfo
 snippet shebang_with_nimr
 	#!/usr/bin/env -S nim r --hints:off --warnings:off
 snippet alap
 	#!/usr/bin/env nimbang
 	#off:nimbang-args c -d:release
-	#nimbang-settings nodebug
+	#nimbang-settings hideDebugInfo
 
 	import std/strutils    # strip, split, join
 	import std/strformat   # &"Hello {name}!"
