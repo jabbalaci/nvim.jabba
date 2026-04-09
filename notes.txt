@@ -1,13 +1,24 @@
 :h lua-guide
 
 I use the following language servers (:Mason):
+----------------------------------------------
 * clangd
 * fortls
 * gopls
 * jdtls
 * jedi-language-server
+* kotlin-language-server
 * lua-language-server
 * nimlangserver
 * ruff
 * serve-d
 * stylua
+
+
+Update the plugins
+------------------
+Inside neovim:
+
+    :Lazy
+
+then press U to update 'em all.
